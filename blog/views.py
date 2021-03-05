@@ -4,7 +4,6 @@ from .models import Category, Post, Comment
 
 
 def index(request):
-    # lista opublikowanych wpisów posortowana od najnowszych do najstarszych
     title = ' BlogoSphere'
     posts = Post.objects.order_by("-pub_date")
     context = {
@@ -19,5 +18,11 @@ def login(request):
 def logout(request):
     pass
 
-def register(request):
-    pass
+def details(request,post_id):
+    post = Post.objects.get(id=post_id)
+    title = f'Post "{post.post_title}"'
+    context = {
+        'title': title,
+        'post' : post,
+    }
+    return render(request, "blog/details.html", context)
