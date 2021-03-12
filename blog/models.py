@@ -8,7 +8,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=200, default='')
 
     def __str__(self):
-        return self.category_name
+        return self.title
 
 
 class Post(models.Model):
@@ -20,7 +20,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
-        return self.post_title
+        return self.title
 
 
 class Comment(models.Model):
