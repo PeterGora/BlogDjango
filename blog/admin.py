@@ -2,14 +2,14 @@ from django.contrib import admin
 from .models import Category, Post, Comment
 
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    prepopulated_fields = {"slug": ["title"]}
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('post_title', 'pub_date', 'content', 'created_by', 'category')
-    list_filter = ['post_title', 'pub_date', 'content', 'created_by', 'category']
+    list_display = ('title', 'pub_date', 'content', 'created_by', 'category')
+    list_filter = ['title', 'pub_date', 'content', 'created_by', 'category']
     date_hierarchy = 'pub_date'
-    search_fields = ['post_title', 'created_by', 'pub_date']
+    search_fields = ['title', 'created_by', 'pub_date']
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('post', 'pub_date', 'created_by', 'accepted')

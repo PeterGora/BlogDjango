@@ -4,14 +4,15 @@ from django.contrib.auth.models import User
 
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=200, verbose_name='Category', default='travel')
+    title = models.CharField(max_length=200, verbose_name='Category', default='travel')
+    slug = models.SlugField(max_length=200, default='')
 
     def __str__(self):
         return self.category_name
 
 
 class Post(models.Model):
-    post_title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
     content = models.TextField()
     draft = models.BooleanField(null=False, blank=True, default=True)
     pub_date = models.DateTimeField(verbose_name='Date published', null=True)

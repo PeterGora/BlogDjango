@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block main %}
+        <div class="row">
+            <h1 class="text-center">{{ title }}</h1>
+        </div>
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+        <form method="POST">
+            {% csrf_token %}
+
+            <hr>
+            {% if form.errors.choice %}
+            <p class="text-danger"> Correct the errors in the form:</p>
+            <ul class="text-danger">
+                {% for error in form.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+             <div class="my-3 lead row">
+                 <div class="col-sm-3">
+                    {{ form.question_text.label_tag }}
+                 </div>
+                 <div class="col-sm-9">
+                     {{ form.question_text }}
+                 </div>
+             </div>
+             <div class="my-3 lead row">
+                   <div class="col-sm-3">
+                       {{ form.pub_date.label_tag }}
+                   </div>
+                    <div class="col-sm-9">
+                    {{ form.pub_date }}
+                    </div>
+             </div>
+            <input type="submit" value="Submit!" class="btn btn-primary my-5">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
