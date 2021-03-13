@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block main %}
+
+        <div class="row">
+            <video  width="640" height="360" muted autoplay loop>
+                <source src="../../static/video.mp4" type="video/mp4">
+                 Your browser does not support the video tag.
+            </video>
+            <section class="col-12 text-center">
+                <h1> Review your posts here! </h1>
+            </section>
+
+
+        </div>
+        <div class="row">
+            {% for post in posts %}
+            <section class="col-12 text-center">
+                <a href="{% url 'index' %}"><h2>{{ post }}</h2></a>
+                <p>{{ post.content }}</p>
+                <p>Posted on: {{ post.pub_date }}<span> Posted by: {{ post.created_by }} </span></p>
+
+            </section>
+            {% empty %}}
+            <div class="row">
+                 <section class="col">
+                    <p>You do not have any questions. <a href="{% url 'new_post' %}"> Add some</a> .</p>
+                 </section>
+            </div>
+            {% endfor %}
+<!--             <section class="col-12 text-center">-->
+<!--            <input type="submit" value="Create a post!" class="btn btn-primary">-->
+<!--             </section>-->
+             <section class="col-12 text-center">
+                     <a href="{% url 'new-post' %}" class="btn btn-success"> Add a New post!</a> .</p>
+                 </section>
+        </div>
+
+{% endblock %}
