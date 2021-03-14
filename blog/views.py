@@ -37,23 +37,23 @@ class IndexView(ListView):
 #     }
 #     return render(request, "blog/details.html", context)
 
-class DetailsView(DetailView):
-    template_name = "blog/details.html"
-    extra_context = {
-        'title': ' BlogoSphere',
-    }
-    context_object_name = "post"
-    pk_url_kwarg = "post_id"
-
-    def get_queryset(self):
-        return Post.objects.exclude(draft=True).order_by("-pub_date")
+# class DetailsView(DetailView):
+#     template_name = "blog/details.html"
+#     extra_context = {
+#         'title': ' BlogoSphere',
+#     }
+#     context_object_name = "post"
+#     pk_url_kwarg = "post_id"
+#
+#     def get_queryset(self):
+#         return Post.objects.exclude(draft=True).order_by("-pub_date")
 
 
 class UserPostsView(LoginRequiredMixin, ListView):
     template_name = "blog/user_post.html"
     context_object_name = "posts"
     extra_context = {
-    "title": "My posts",
+    "title": "Review your posts",
         }
     success_url = reverse_lazy("details")
 
@@ -77,10 +77,10 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PostForm
-    template_name = "polls/edit_post.html"
-    success_url = reverse_lazy("edit-post")
+    template_name = "blog/edit_post.html"
+    success_url = reverse_lazy("user-post")
     context_object_name = "post"
-    pk_url_kwarg = "post"
+    pk_url_kwarg = "post_id"
 
     def get_queryset(self):
         return Post.objects.filter(created_by=self.request.user)
