@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -7,10 +7,20 @@ class PostForm(forms.ModelForm):
         fields = (
             "title",
             "content",
-
+            "category",
         )
         widgets = {
-            "title": forms.TextInput(attrs={"class": "form-control"}),
+            "content":forms.TextInput(attrs={"class": "form-control"}),
             "content": forms.TextInput(attrs={"class": "form-control"}),
+        }
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = (
+            "content", "created_by",
+       )
+        widgets = {
+            "content": forms.TextInput(attrs={"class": "form-control"}),
+            "content": forms.TextInput(attrs={"class": "form-control"}),
         }

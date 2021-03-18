@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Category, Post, Comment
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, FormView, CreateView, UpdateView
-from django.views.generic.detail import SingleObjectMixin
+
 
 # def index(request):
 #     title = ' BlogoSphere'
@@ -25,8 +25,6 @@ class IndexView(ListView):
     def get_queryset(self):
         return Post.objects.exclude(draft=True).order_by("-pub_date")
 
-# class CreatePost(LoginRequiredMixin, CreateView):
-
 
 # def details(request,post_id):
 #     post = Post.objects.get(id=post_id)
@@ -37,25 +35,25 @@ class IndexView(ListView):
 #     }
 #     return render(request, "blog/details.html", context)
 
-# class DetailsView(DetailView):
-#     template_name = "blog/details.html"
-#     extra_context = {
-#         'title': ' BlogoSphere',
-#     }
-#     context_object_name = "post"
-#     pk_url_kwarg = "post_id"
-#
-#     def get_queryset(self):
-#         return Post.objects.exclude(draft=True).order_by("-pub_date")
+class DetailsView(DetailView):
+    template_name = "blog/post.html"
+    extra_context = {
+        'title': ' BlogoSphere',
+    }
+    context_object_name = "post"
+    pk_url_kwarg = "post_id"
+
+    def get_queryset(self):
+        return Post.objects.exclude(draft=True).order_by("-pub_date")
 
 
 class UserPostsView(LoginRequiredMixin, ListView):
     template_name = "blog/user_post.html"
     context_object_name = "posts"
     extra_context = {
-    "title": "Review your posts",
+    "title": "Review and edit your posts",
         }
-    success_url = reverse_lazy("details")
+    success_url = reverse_lazy("user-post")
 
     def get_queryset(self):
         user = self.request.user
@@ -94,4 +92,18 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+
+class CommentView(LoginRequiredMixin, CreateView):
+    model = Comment
+    template_name = "blog/comment.html"
+    form_class = CommentForm
+    extra_context = {
+        "title": "Add your comment"
+            }
+    success_url = reverse_lazy("index")
+
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['post_id']
         return super().form_valid(form)
