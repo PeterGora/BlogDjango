@@ -1,7 +1,9 @@
 # BlogDjango
 Simple blog created in Python, Django, HTML, SQLite to test Logins, authorization, Posts and comments.
-Later deployed to heroku on:
+Deployed to heroku on:
  https://powerful-earth-27097.herokuapp.com/
+ 
+ ![BlogShot](https://github.com/PeterGora/BlogDjango/blob/master/bloge.png?raw=true)
 
 
 ## About Author
