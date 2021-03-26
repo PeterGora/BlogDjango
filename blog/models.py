@@ -14,6 +14,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
+    image = models.ImageField(upload_to='static/')
     draft = models.BooleanField(null=False, blank=True, default=True)
     pub_date = models.DateTimeField(verbose_name='Date published', null=True)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True)

@@ -2,12 +2,14 @@ from django import forms
 from .models import Post, Comment
 
 class PostForm(forms.ModelForm):
+    # image = forms.ImageField(upload_to='static/')
     class Meta:
         model = Post
         fields = (
             "title",
             "content",
             "category",
+            "image",
         )
         widgets = {
             "content":forms.TextInput(attrs={"class": "form-control"}),
